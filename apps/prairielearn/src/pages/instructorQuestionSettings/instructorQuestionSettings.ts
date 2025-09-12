@@ -52,6 +52,13 @@ import {
 const router = Router();
 const sql = sqldb.loadSqlEquiv(import.meta.url);
 
+interface JSONAuthor {
+  name?: string;
+  email?: string;
+  orcid?: string;
+  originCourse?: string;
+}
+
 router.post(
   '/test',
   asyncHandler(async (req, res) => {
@@ -258,6 +265,41 @@ router.post(
       } else {
         questionInfo.workspaceOptions = undefined;
       }
+
+      // Author data
+      const bodyData = req.body;
+      const keys: string[] = Object.keys(bodyData);
+      const numAuthorsKeys = keys.filter((key) => key.includes('author')).length / 4;
+      const authors = [numAuthorsKeys];
+      for (let index = 0; index < numAuthorsKeys; index++) {
+        const name: string | undefined = bodyData['author_name_' + index];
+        const email: string | undefined = bodyData['author_email_' + index];
+        const orcid: string | undefined = bodyData['author_orcid_' + index];
+        const originCourse: string | undefined = bodyData['author_origin_course_' + index];
+        const newAuthor: JSONAuthor = {};
+        if (name !== undefined && name !== '') {
+          newAuthor.name = name;
+        }
+        if (email !== undefined && email !== '') {
+          newAuthor.email = email;
+        }
+        if (orcid !== undefined && orcid !== '') {
+          newAuthor.orcid = orcid;
+        }
+        if (originCourse !== undefined && originCourse !== '') {
+          newAuthor.originCourse = originCourse;
+        }
+        // Only write author if at least one of the fields is nonnull
+        if (
+          name !== undefined ||
+          email !== undefined ||
+          orcid !== undefined ||
+          originCourse !== undefined
+        ) {
+          authors[index] = newAuthor;
+        }
+      }
+      questionInfo.authors = authors;
 
       const formattedJson = await formatJsonWithPrettier(JSON.stringify(questionInfo));
 
