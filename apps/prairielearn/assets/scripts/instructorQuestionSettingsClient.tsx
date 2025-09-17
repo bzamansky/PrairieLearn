@@ -129,4 +129,20 @@ onDocumentReady(() => {
       questionSettingsForm.reportValidity();
     }
   });
+  const addAuthorButton = document.querySelector<HTMLButtonElement>('#add-author-button');
+  addAuthorButton?.addEventListener('click', () => {
+    const table = document.getElementById('author-table-body');
+    const numRows = table?.getElementsByClassName('author-row');
+
+    const newRow = document.createElement('tr');
+    let tableData = document.createElement('td');
+    const nameInput = document.createElement('input');
+    nameInput.setAttribute('type', 'text');
+    nameInput.setAttribute('class', 'form-control font-monospace');
+    nameInput.setAttribute('id', 'author_name_' + numRows);
+    tableData.appendChild(nameInput);
+    newRow.appendChild(tableData);
+
+    table?.appendChild(newRow);
+  });
 });
