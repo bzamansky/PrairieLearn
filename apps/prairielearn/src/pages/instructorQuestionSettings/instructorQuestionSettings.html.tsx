@@ -287,7 +287,7 @@ export function InstructorQuestionSettings({
                 <tbody id="author-table-body">
                   ${authorsData.map((author, index) => {
                     return html`
-                      <tr class="author-row">
+                      <tr class="author-row" id="${'author_row_' + index}">
                         <td>
                           ${canEdit
                             ? html`<input
@@ -339,17 +339,29 @@ export function InstructorQuestionSettings({
                                 >${author?.origin_course ?? ''}</small
                               >`}
                         </td>
+                        <td>
+                          <button
+                            id="${'remove_author_' + index}"
+                            class="btn btn-secondary mb-2"
+                            type="button"
+                          >
+                            Remove
+                          </button>
+                        </td>
                       </tr>
                     `;
                   })}
                 </tbody>
                 <tfoot>
                   <tr>
-                    <td colspan="3"></td>
-                    <td align="right">
+                    <td colspan="4" align="left">
                       <button id="add-author-button" class="btn btn-primary mb-2" type="button">
                         Add Author
                       </button>
+                      <small
+                        >Each author must have a name and one of email, orcid, and origin
+                        course</small
+                      >
                     </td>
                   </tr>
                 </tfoot>

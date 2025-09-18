@@ -130,13 +130,13 @@ onDocumentReady(() => {
     }
   });
   const addAuthorButton = document.querySelector<HTMLButtonElement>('#add-author-button');
+  const table = document.getElementById('author-table-body');
+  const rows = table?.getElementsByClassName('author-row');
+  const numRows = rows?.length ?? 0;
   addAuthorButton?.addEventListener('click', () => {
-    const table = document.getElementById('author-table-body');
-    const rows = table?.getElementsByClassName('author-row');
-    const numRows = rows?.length;
-
     const newRow = document.createElement('tr');
     newRow.setAttribute('class', 'author-row');
+    newRow.setAttribute('id', 'author_row_' + numRows);
     let tableData = document.createElement('td');
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
@@ -173,6 +173,33 @@ onDocumentReady(() => {
     tableData.appendChild(originCourseInput);
     newRow.appendChild(tableData);
 
+    tableData = document.createElement('td');
+    const removeData = document.createElement('button');
+    removeData.setAttribute('type', 'button');
+    removeData.setAttribute('class', 'btn btn-secondary mb-2');
+    removeData.setAttribute('id', 'remove_author_' + numRows);
+    removeData.innerText = 'Remove';
+    removeData?.addEventListener('click', () => {
+      const rowToRemove = document.querySelector<HTMLTableRowElement>('#author_row_' + numRows);
+      rowToRemove?.remove();
+      if (questionSettingsForm && saveButton) {
+        saveButton.setAttribute('disabled', 'false');
+      }
+    });
+    tableData.appendChild(removeData);
+    newRow.appendChild(tableData);
+
     table?.appendChild(newRow);
   });
+
+  for (let index = 0; index < numRows; index++) {
+    const removeAuthorButton = document.querySelector<HTMLButtonElement>('#remove_author_' + index);
+    removeAuthorButton?.addEventListener('click', () => {
+      const rowToRemove = document.querySelector<HTMLTableRowElement>('#author_row_' + index);
+      rowToRemove?.remove();
+      if (questionSettingsForm && saveButton) {
+        saveButton.setAttribute('disabled', 'false');
+      }
+    });
+  }
 });

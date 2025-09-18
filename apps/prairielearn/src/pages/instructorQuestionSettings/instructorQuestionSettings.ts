@@ -292,10 +292,8 @@ router.post(
         }
         // Only write author if at least one of the fields is nonnull
         if (
-          name !== undefined ||
-          email !== undefined ||
-          orcid !== undefined ||
-          originCourse !== undefined
+          name !== undefined &&
+          (email !== undefined || orcid !== undefined || originCourse !== undefined)
         ) {
           authors[index] = newAuthor;
         }
