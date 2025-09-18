@@ -6,7 +6,8 @@
   "type": "v3",
   "sharingSets": ["final-exam"],
   "authors": [
+    { "name": "Jane Smith", "email": "smith@example.org", "orcid": "0000-0000-0000-0001" },
     { "name": "John Doe", "email": "doeJohn1@example.org" },
-    { "name": "Jane Smith", "email": "smith@example.org", "orcid": "0000-0000-0000-0001" }
+    { "name": "John Smith", "orcid": "0000-0000-0000-0001" }
   ]
 }

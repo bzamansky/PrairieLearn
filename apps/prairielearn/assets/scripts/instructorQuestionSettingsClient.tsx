@@ -132,15 +132,45 @@ onDocumentReady(() => {
   const addAuthorButton = document.querySelector<HTMLButtonElement>('#add-author-button');
   addAuthorButton?.addEventListener('click', () => {
     const table = document.getElementById('author-table-body');
-    const numRows = table?.getElementsByClassName('author-row');
+    const rows = table?.getElementsByClassName('author-row');
+    const numRows = rows?.length;
 
     const newRow = document.createElement('tr');
+    newRow.setAttribute('class', 'author-row');
     let tableData = document.createElement('td');
     const nameInput = document.createElement('input');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('class', 'form-control font-monospace');
     nameInput.setAttribute('id', 'author_name_' + numRows);
+    nameInput.setAttribute('name', 'author_name_' + numRows);
     tableData.appendChild(nameInput);
+    newRow.appendChild(tableData);
+
+    tableData = document.createElement('td');
+    const emailInput = document.createElement('input');
+    emailInput.setAttribute('type', 'text');
+    emailInput.setAttribute('class', 'form-control font-monospace');
+    emailInput.setAttribute('id', 'author_email_' + numRows);
+    emailInput.setAttribute('name', 'author_email_' + numRows);
+    tableData.appendChild(emailInput);
+    newRow.appendChild(tableData);
+
+    tableData = document.createElement('td');
+    const orcidInput = document.createElement('input');
+    orcidInput.setAttribute('type', 'text');
+    orcidInput.setAttribute('class', 'form-control font-monospace');
+    orcidInput.setAttribute('id', 'author_orcid_' + numRows);
+    orcidInput.setAttribute('name', 'author_orcid_' + numRows);
+    tableData.appendChild(orcidInput);
+    newRow.appendChild(tableData);
+
+    tableData = document.createElement('td');
+    const originCourseInput = document.createElement('input');
+    originCourseInput.setAttribute('type', 'text');
+    originCourseInput.setAttribute('class', 'form-control font-monospace');
+    originCourseInput.setAttribute('id', 'author_origin_course_' + numRows);
+    originCourseInput.setAttribute('name', 'author_origin_course_' + numRows);
+    tableData.appendChild(originCourseInput);
     newRow.appendChild(tableData);
 
     table?.appendChild(newRow);

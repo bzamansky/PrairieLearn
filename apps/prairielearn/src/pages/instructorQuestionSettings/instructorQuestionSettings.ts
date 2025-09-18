@@ -269,6 +269,7 @@ router.post(
       // Author data
       const bodyData = req.body;
       const keys: string[] = Object.keys(bodyData);
+      console.log(bodyData);
       const numAuthorsKeys = keys.filter((key) => key.includes('author')).length / 4;
       const authors = [numAuthorsKeys];
       for (let index = 0; index < numAuthorsKeys; index++) {
