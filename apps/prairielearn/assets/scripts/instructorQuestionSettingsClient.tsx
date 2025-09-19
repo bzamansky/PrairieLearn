@@ -204,4 +204,40 @@ onDocumentReady(() => {
       }
     });
   }
+
+  for (let index = 0; index < numRows; index++) {
+    const orcidIDInput = document.querySelector<HTMLButtonElement>('#author_orcid_' + index);
+    orcidIDInput?.addEventListener('blur', () => {
+      const orcidIDValue = orcidIDInput.value;
+      const validOrcidID = validateORCID(orcidIDValue);
+      const inputClass = 'form-control font-monospace';
+      orcidIDInput.setAttribute(
+        'class',
+        validOrcidID ? inputClass + ' is-valid' : inputClass + ' is-invalid',
+      );
+    });
+  }
 });
+
+function validateORCID(orcid: string): boolean {
+  // Drop any dashes
+  const digits = orcid.replaceAll('-', '');
+
+  // Sanity check that should not fail since the ORCID identifier format is baked into the JSON schema
+  if (!/^\d{15}[\dX]$/.test(digits)) {
+    return false;
+  }
+
+  // Calculate and verify checksum
+  // (adapted from Java code provided here: https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier)
+  let total = 0;
+  for (let i = 0; i < 15; i++) {
+    total = (total + Number.parseInt(digits[i])) * 2;
+  }
+
+  const remainder = total % 11;
+  const result = (12 - remainder) % 11;
+  const checkDigit = result === 10 ? 'X' : String(result);
+
+  return digits[15] === checkDigit;
+}

@@ -319,6 +319,8 @@ export function InstructorQuestionSettings({
                           ${canEdit
                             ? html`<input
                                 type="text"
+                                pattern="^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$"
+                                placeholder="0000-0000-0000-0000"
                                 class="form-control font-monospace"
                                 id="${'author_orcid_' + index}"
                                 name="${'author_orcid_' + index}"
