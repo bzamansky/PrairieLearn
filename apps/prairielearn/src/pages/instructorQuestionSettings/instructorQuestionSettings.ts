@@ -270,13 +270,17 @@ router.post(
       const bodyData = req.body;
       const keys: string[] = Object.keys(bodyData);
       console.log(bodyData);
-      const numAuthorsKeys = keys.filter((key) => key.includes('author')).length / 4;
+      const authorKeys = keys.filter((key) => key.includes('author'));
+      const numAuthorsKeys = authorKeys.length / 4;
       const authors = [numAuthorsKeys];
-      for (let index = 0; index < numAuthorsKeys; index++) {
-        const name: string | undefined = bodyData['author_name_' + index];
-        const email: string | undefined = bodyData['author_email_' + index];
-        const orcid: string | undefined = bodyData['author_orcid_' + index];
-        const originCourse: string | undefined = bodyData['author_origin_course_' + index];
+      const authorNameKeys = authorKeys.filter((key) => key.includes('author_name_'));
+      const authorNameIndices = authorNameKeys.map((key) => key.charAt(key.length - 1));
+      for (let index = 0; index < authorNameIndices.length; index++) {
+        const name: string | undefined = bodyData['author_name_' + authorNameIndices[index]];
+        const email: string | undefined = bodyData['author_email_' + authorNameIndices[index]];
+        const orcid: string | undefined = bodyData['author_orcid_' + authorNameIndices[index]];
+        const originCourse: string | undefined =
+          bodyData['author_origin_course_' + authorNameIndices[index]];
         const newAuthor: JSONAuthor = {};
         if (name !== undefined && name !== '') {
           newAuthor.name = name;
