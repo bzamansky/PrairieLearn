@@ -269,10 +269,9 @@ router.post(
       // Author data
       const bodyData = req.body;
       const keys: string[] = Object.keys(bodyData);
-      console.log(bodyData);
       const authorKeys = keys.filter((key) => key.includes('author'));
       const numAuthorsKeys = authorKeys.length / 4;
-      const authors = [numAuthorsKeys];
+      const authors = new Array<JSONAuthor>(numAuthorsKeys);
       const authorNameKeys = authorKeys.filter((key) => key.includes('author_name_'));
       const authorNameIndices = authorNameKeys.map((key) => key.charAt(key.length - 1));
       for (let index = 0; index < authorNameIndices.length; index++) {
