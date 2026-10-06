@@ -49,7 +49,7 @@ export function StudentCoursesCard({
             className="btn btn-light btn-sm ms-auto"
             onClick={() => setShowJoinModal(true)}
           >
-            <i className="bi bi-plus me-sm-1" aria-hidden="true" />
+            <i className="bi bi-plus-circle me-sm-1" aria-hidden="true" />
             <span className="d-none d-sm-inline">Add course</span>
           </button>
         )}
