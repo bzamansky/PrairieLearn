@@ -70,7 +70,7 @@ export function InstructorCourseAdminSettings({
               disabled={disabled}
               required
             />
-            <small className="form-text text-muted">
+            <small className="pd-2 form-text text-muted">
               This is the official title of the course, as given in the course catalog.
             </small>
           </div>
