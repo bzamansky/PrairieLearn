@@ -133,7 +133,7 @@ export function InstructorCourseAdminSettings({
               value={`${institution.short_name} (${institution.long_name})`}
               disabled
             />
-            <small className="form-text">
+            <small className="form-text text-bold">
               This is your academic institution (e.g., "University of Illinois").
             </small>
           </div>
