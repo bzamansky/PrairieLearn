@@ -133,7 +133,7 @@ export function InstructorCourseAdminSettings({
               value={`${institution.short_name} (${institution.long_name})`}
               disabled
             />
-            <small className="form-text text-bold">
+            <small className="form-text text-muted">
               This is your academic institution (e.g., "University of Illinois").
             </small>
           </div>
@@ -168,7 +168,7 @@ export function InstructorCourseAdminSettings({
               />
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary js-copy-button"
+                className="btn btn-md btn-outline-secondary js-copy-button"
                 data-clipboard-text={course.repository}
                 aria-label="Copy repository"
                 disabled={!course.repository}
