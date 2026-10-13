@@ -50,7 +50,7 @@ export function StudentCoursesCard({
             onClick={() => setShowJoinModal(true)}
           >
             <i className="bi bi-plus-circle me-sm-1" aria-hidden="true" />
-            <span className="d-none d-sm-inline">Add course</span>
+            <span className="d-none d-sm-inline">Add courses</span>
           </button>
         )}
       </div>
