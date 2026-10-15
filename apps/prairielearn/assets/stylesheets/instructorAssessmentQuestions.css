@@ -87,7 +87,7 @@
   background-color: var(--bs-primary-bg-subtle);
 }
 .picker-row[aria-disabled]:hover {
-  background-color: red;
+  background-color: transparent;
 }
 .picker-delete-btn:hover {
   color: var(--bs-danger) !important;
