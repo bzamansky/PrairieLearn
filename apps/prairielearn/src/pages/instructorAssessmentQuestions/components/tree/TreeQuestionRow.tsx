@@ -249,6 +249,7 @@ export function TreeQuestionRow({
         // https://bugzilla.mozilla.org/show_bug.cgi?id=636564
         paddingRight: '1.5rem',
         cursor: 'pointer',
+        backgroundColor: 'red',
       }}
       onClick={(e) => {
         e.stopPropagation();
