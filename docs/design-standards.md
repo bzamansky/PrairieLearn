@@ -47,7 +47,7 @@ system; follow the nearby implementation when a page has a more specific establi
   `--bs-primary`, over hard-coded colors. This helps UI follow application themes.
 - Use the repository's `color-*` badge classes for the established colored badge treatment. The
   available palette and rendered examples are maintained in
-  [`apps/prairielearn/public/stylesheets/colors.scss`](../apps/prairielearn/public/stylesheets/colors.scss)
+  [`apps/prairielearn/public/stylesheets/colors.scss`]
   and [`docs/course/colors.html`](course/colors.html). If changing that palette, also update the
   corresponding Python color lookup as described in the stylesheet.
 - Use contextual Bootstrap styles for common states such as success, warning, and danger. Make sure
