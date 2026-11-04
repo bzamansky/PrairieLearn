@@ -168,7 +168,7 @@ export function InstructorCourseAdminSettings({
               />
               <button
                 type="button"
-                className="btn btn-sm btn-outline-secondary js-copy-button"
+                className="btn btn-md btn-outline-secondary js-copy-button"
                 data-clipboard-text={course.repository}
                 aria-label="Copy repository"
                 disabled={!course.repository}
