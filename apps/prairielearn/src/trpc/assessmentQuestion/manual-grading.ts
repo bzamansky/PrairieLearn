@@ -4,10 +4,8 @@ import { z } from 'zod';
 import { run } from '@prairielearn/run';
 import { IdSchema } from '@prairielearn/zod';
 
-import {
-  AI_GRADING_MODEL_IDS,
-  type AiGradingModelId,
-} from '../../ee/lib/ai-grading/ai-grading-models.shared.js';
+import { MAX_FREE_AI_GRADING_CREDIT_REDEMPTIONS_PER_COURSE } from '../../ee/lib/ai-grading-free-credit-constants.js';
+import { AiGradingSelectionSchema } from '../../ee/lib/ai-grading/ai-grading-selection.shared.js';
 import {
   fillInstanceQuestionColumnEntries,
   selectAiGradingExportText,
@@ -15,7 +13,6 @@ import {
 import {
   deleteAiGradingJobs,
   hasPriorAiGradingJobs,
-  setAiGradingLastSelectedModel,
   setAiGradingMode,
 } from '../../ee/lib/ai-grading/ai-grading-util.js';
 import {
@@ -24,7 +21,6 @@ import {
   getActiveAiGradingJobCountForCourseInstance,
 } from '../../ee/lib/ai-grading/ai-grading.js';
 import { AiGradingExportTextSchema } from '../../ee/lib/ai-grading/types.js';
-import { MAX_FREE_AI_GRADING_CREDIT_REDEMPTIONS_PER_COURSE } from '../../ee/lib/ai-grading-free-credit-constants.js';
 import { deleteAiInstanceQuestionGroups } from '../../ee/lib/ai-instance-question-grouping/ai-instance-question-grouping-util.js';
 import { aiInstanceQuestionGrouping } from '../../ee/lib/ai-instance-question-grouping/ai-instance-question-grouping.js';
 import {
@@ -175,14 +171,15 @@ const aiGradeInstanceQuestionsMutation = t.procedure
   .use(requireCourseInstancePermissionEdit)
   .use(requireAiGradingFeature)
   .input(
-    z.object({
-      selection: z.union([z.literal('all'), z.literal('human_graded'), z.string().array()]),
-      model_id: z.enum(AI_GRADING_MODEL_IDS as [AiGradingModelId, ...AiGradingModelId[]]),
-    }),
+    z.intersection(
+      z.object({
+        selection: z.union([z.literal('all'), z.literal('human_graded'), z.string().array()]),
+      }),
+      AiGradingSelectionSchema,
+    ),
   )
   .output(z.object({ job_sequence_id: z.string(), job_sequence_token: z.string() }))
   .mutation(async (opts) => {
-    await setAiGradingLastSelectedModel(opts.ctx.assessment_question.id, opts.input.model_id);
     const job_sequence_id = await aiGrade({
       question: opts.ctx.question,
       course: opts.ctx.course,
@@ -193,6 +190,8 @@ const aiGradeInstanceQuestionsMutation = t.procedure
       authn_user_id: opts.ctx.authn_user.id,
       user_id: opts.ctx.user.id,
       model_id: opts.input.model_id,
+      provider: opts.input.provider,
+      credential_id: opts.input.credential_id,
       mode: run(() => {
         if (Array.isArray(opts.input.selection)) return 'selected';
         return opts.input.selection;

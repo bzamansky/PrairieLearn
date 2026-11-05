@@ -1,5 +1,4 @@
-/* eslint perfectionist/sort-objects: error */
-
+// `oxlint.config.mts` keeps the objects in this file sorted; update it if this file moves.
 /**
  * These schemas are used on any client page that needs to display data from the database. They are a more
  * strict version of the db-types.ts schemas.
@@ -29,6 +28,8 @@ import {
   AssessmentSetSchema as RawAssessmentSetSchema,
   AuditEventSchema as RawAuditEventSchema,
   AuthnProviderSchema as RawAuthnProviderSchema,
+  CourseAgentConversationSchema as RawCourseAgentConversationSchema,
+  CourseInstanceAiGradingCredentialSchema as RawCourseInstanceAiGradingCredentialSchema,
   CourseInstancePublishingExtensionSchema as RawCourseInstancePublishingExtensionSchema,
   CourseInstanceSchema as RawCourseInstanceSchema,
   CourseSchema as RawCourseSchema,
@@ -241,6 +242,17 @@ export const RawStaffAuthnProviderSchema = RawAuthnProviderSchema.pick({
 });
 export const StaffAuthnProviderSchema = RawStaffAuthnProviderSchema.brand<'StaffAuthnProvider'>();
 export type StaffAuthnProvider = z.infer<typeof StaffAuthnProviderSchema>;
+
+/** Course Agent Conversations */
+// Omits `agent_conversation_id`: only the server addresses the agent service.
+export const RawStaffCourseAgentConversationSchema = RawCourseAgentConversationSchema.pick({
+  created_at: true,
+  id: true,
+  title: true,
+});
+export const StaffCourseAgentConversationSchema =
+  RawStaffCourseAgentConversationSchema.brand<'StaffCourseAgentConversation'>();
+export type StaffCourseAgentConversation = z.infer<typeof StaffCourseAgentConversationSchema>;
 
 /** Courses */
 export const RawAdminCourseSchema = RawCourseSchema;
@@ -600,3 +612,13 @@ export const RawStaffStudentLabelSchema = RawStudentLabelSchema.pick({
 });
 export const StaffStudentLabelSchema = RawStaffStudentLabelSchema.brand<'StaffStudentLabel'>();
 export type StaffStudentLabel = z.infer<typeof StaffStudentLabelSchema>;
+
+/** AI grading provider configuration metadata; keys are never exposed. */
+export const StaffAiGradingCredentialSchema = RawCourseInstanceAiGradingCredentialSchema.pick({
+  base_url: true,
+  created_at: true,
+  id: true,
+  provider: true,
+})
+  .extend({ apiKeyMasked: z.string(), dateAdded: z.string() })
+  .brand<'StaffAiGradingCredential'>();
