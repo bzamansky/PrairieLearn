@@ -167,7 +167,7 @@ export function StudentInstanceQuestion({
             resLocals.assessment.type === 'Exam'
               ? html`
                   <div class="card mb-4">
-                    <div class="card-header bg-primary">
+                    <div class="card-header bg-secondary">
                       <h2>
                         <a
                           class="text-white"
