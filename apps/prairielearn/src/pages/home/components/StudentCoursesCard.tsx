@@ -40,8 +40,8 @@ export function StudentCoursesCard({
   );
 
   return (
-    <div className="card mb-2">
-      <div className="card-header bg-secondary text-white d-flex align-items-center">
+    <div className="card mb-4">
+      <div className="card-header bg-primary text-white d-flex align-items-center">
         <h2>{heading}</h2>
         {canAddCourses && (
           <button
